@@ -8,6 +8,7 @@ use pocketmine\network\mcpe\protocol\LoginPacket;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\utils\Config;
+use pocketmine\network\mcpe\JwtUtils;
 
 class Main extends PluginBase implements Listener{
 
@@ -29,24 +30,25 @@ class Main extends PluginBase implements Listener{
         $cfg = new Config($this->getDataFolder() . "config.yml", Config::YAML);
         if($event->getPacket() instanceof LoginPacket){
             //1 = Android, 2 = IOS, 7 = W10
-            if($event->getPacket()->clientData["DeviceOS"] == 7){
+            /*if($event->getPacket()->clientData["DeviceOS"] == 7){
                 if($cfg->get("w10") == true){
                     $this->getServer()->broadcastMessage(self::replaceText(TF::colorize($cfg->get("w10-quit-message")), $event->getPlayer()->getName()));
-                    $event->getPlayer()->kick(TF::colorize($cfg->get("w10-kick-reason")), false/*, TF::colorize($cfg->get("w10-quit-message"))*/);
+                    $event->getPlayer()->kick(TF::colorize($cfg->get("w10-kick-reason")), false);
                 }
             }
             elseif($event->getPacket()->clientData["DeviceOS"] == 1){
                 if($cfg->get("android") == true){
                     $this->getServer()->broadcastMessage(self::replaceText(TF::colorize($cfg->get("android-quit-message")), $event->getPlayer()->getName()));
-                    $event->getPlayer()->kick(TF::colorize($cfg->get("android-kick-reason")), false/*, TF::colorize($cfg->get("android-quit-message"))*/);
+                    $event->getPlayer()->kick(TF::colorize($cfg->get("android-kick-reason")), false);
                 }
             }
             elseif($event->getPacket()->clientData["DeviceOS"] == 2){
                 if($cfg->get("ios") == true){
                     $this->getServer()->broadcastMessage(self::replaceText(TF::colorize($cfg->get("ios-quit-message")), $event->getPlayer()->getName()));
-                    $event->getPlayer()->kick(TF::colorize($cfg->get("ios-kick-reason")), false/*, TF::colorize($cfg->get("ios-quit-message"))*/);
+                    $event->getPlayer()->kick(TF::colorize($cfg->get("ios-kick-reason")), false);
                 }
-            }
+            }*/
+            var_dump(JwtUtils::parse($packet->clientDataJwt));
         }
     }
 }
